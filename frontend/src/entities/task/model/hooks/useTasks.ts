@@ -23,7 +23,9 @@ export function useTasks() {
       const data: ITask[] = await getTasks();
       dispatch({ type: 'FETCH_SUCCESS', payload: data });
     } catch (e) {
-      dispatch({ type: 'FETCH_ERROR', payload: parseError(e) });
+      const error = parseError(e);
+      dispatch({ type: 'FETCH_ERROR', payload: error });
+      throw error;
     }
   }, []);
 
@@ -34,7 +36,9 @@ export function useTasks() {
       const data: ITask = await getTaskById(id);
       dispatch({ type: 'FETCH_ONE_SUCCESS', payload: data });
     } catch (e) {
-      dispatch({ type: 'FETCH_ERROR', payload: parseError(e) });
+      const error = parseError(e);
+      dispatch({ type: 'FETCH_ERROR', payload: error });
+      throw error;
     }
   }, []);
 
@@ -46,7 +50,9 @@ export function useTasks() {
         await deleteTaskById(id);
         await fetchTasks(); // чтобы после удаления обновить список
       } catch (e) {
-        dispatch({ type: 'FETCH_ERROR', payload: parseError(e) });
+        const error = parseError(e);
+        dispatch({ type: 'FETCH_ERROR', payload: error });
+        throw error;
       }
     },
     [fetchTasks]
@@ -58,9 +64,11 @@ export function useTasks() {
       dispatch({ type: 'FETCH_START' });
       try {
         await createTask(body);
-        await fetchTasks(); // чтобы после создания обновить список
+        await fetchTasks();
       } catch (e) {
-        dispatch({ type: 'FETCH_ERROR', payload: parseError(e) });
+        const error = parseError(e);
+        dispatch({ type: 'FETCH_ERROR', payload: error });
+        throw error;
       }
     },
     [fetchTasks]

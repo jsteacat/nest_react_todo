@@ -1,13 +1,11 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import svgr from 'vite-plugin-svgr'
-import path from 'path'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import svgr from 'vite-plugin-svgr';
+import path from 'path';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  plugins: [
-    react(),
-    svgr(),
-  ],
+  plugins: [react(), svgr(), tailwindcss()],
   css: {
     modules: {
       localsConvention: 'camelCase',
@@ -35,7 +33,7 @@ export default defineConfig({
       '@domain': path.resolve(__dirname, './src/domain'),
       '@layouts': path.resolve(__dirname, './src/layouts'),
       '@router': path.resolve(__dirname, './src/router'),
-      '@public': path.resolve(__dirname, './public'),
-    },
-  },
-})
+      '@public': path.resolve(__dirname, './public')
+    }
+  }
+});

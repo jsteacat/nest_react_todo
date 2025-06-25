@@ -4,6 +4,11 @@ export interface ITask {
   description: string;
 }
 
+export interface ITaskItemProps {
+  todo: ITask;
+  onDelete: () => void;
+}
+
 export type TTaskState = {
   tasks: ITask[];
   currentTask: ITask | null;

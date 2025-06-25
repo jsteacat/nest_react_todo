@@ -11,7 +11,10 @@ export class Task {
   @Column()
   title: string;
 
-  @ApiProperty({ example: 'Купить хлеб в магазине после работы', description: 'Описание задачи' })
+  @ApiProperty({
+    example: 'Купить хлеб в магазине после работы',
+    description: 'Описание задачи',
+  })
   @Column()
   description: string;
 }

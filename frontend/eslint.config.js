@@ -8,37 +8,24 @@ import prettierPlugin from 'eslint-plugin-prettier';
 import cypressPlugin from 'eslint-plugin-cypress';
 import eslintConfigPrettier from 'eslint-config-prettier';
 
-const ALIAS_PATHS = [
-  '@',
-  '@assets',
-  '@components',
-  '@widgets',
-  '@utils',
-  '@hooks',
-  '@store',
-  '@api',
-  '@domain',
-  '@layouts',
-  '@router',
-  '@public',
-];
+const ALIAS_PATHS = ['@', '@assets', '@components', '@widgets', '@utils', '@hooks', '@store', '@api', '@domain', '@layouts', '@router', '@public'];
 
 export default [
   {
     files: ['**/*.{ts,tsx,js,jsx}'],
     ignores: [
-      "**/*.config.{js,ts}",
-      "**/*.d.ts",
-      "**/dist/**",
-      "**/build/**",
-      "**/node_modules/**",
-      "**/.next/**",
-      "**/public/**",
-      "**/coverage/**",
-      "**/storybook-static/**",
-      "**/stories/**",
-      "**/*.{img,png,svg,woff,woff2,ttf,ico,pdf,xml}",
-      "**/public/**"
+      '**/*.config.{js,ts}',
+      '**/*.d.ts',
+      '**/dist/**',
+      '**/build/**',
+      '**/node_modules/**',
+      '**/.next/**',
+      '**/public/**',
+      '**/coverage/**',
+      '**/storybook-static/**',
+      '**/stories/**',
+      '**/*.{img,png,svg,woff,woff2,ttf,ico,pdf,xml}',
+      '**/public/**'
     ],
     languageOptions: {
       parser: tsParser,
@@ -66,8 +53,8 @@ export default [
       cypress: cypressPlugin
     },
     settings: {
-      react: { 
-        version: 'detect' 
+      react: {
+        version: 'detect'
       },
       'import/parsers': {
         '@typescript-eslint/parser': ['.ts', '.tsx']
@@ -75,12 +62,7 @@ export default [
       'import/resolver': {
         typescript: {
           alwaysTryTypes: true,
-          project: [
-            './tsconfig.json',
-            './tsconfig-eslint.json',
-            './packages/*/tsconfig.json',
-            './packages/apps/*/tsconfig.json'
-          ]
+          project: ['./tsconfig.json', './tsconfig-eslint.json', './packages/*/tsconfig.json', './packages/apps/*/tsconfig.json']
         },
         node: {
           extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.css', '.scss']
@@ -101,15 +83,21 @@ export default [
           }
         }
       ],
-      '@typescript-eslint/no-unused-vars': ['warn', { 
-        argsIgnorePattern: '^_',
-        varsIgnorePattern: '^_',
-        caughtErrorsIgnorePattern: '^_'
-      }],
-      '@typescript-eslint/consistent-type-imports': ['error', {
-        prefer: 'type-imports',
-        fixStyle: 'separate-type-imports'
-      }],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_'
+        }
+      ],
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        {
+          prefer: 'type-imports',
+          fixStyle: 'separate-type-imports'
+        }
+      ],
       '@typescript-eslint/no-var-requires': 'error',
 
       // React
@@ -117,78 +105,104 @@ export default [
       'react/prop-types': 'off',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
-      'react/jsx-filename-extension': ['error', { 
-        extensions: ['.tsx', '.jsx'] 
-      }],
+      'react/jsx-filename-extension': [
+        'error',
+        {
+          extensions: ['.tsx', '.jsx']
+        }
+      ],
 
       // Imports
-      'import/extensions': ['error', 'never', {
-        'css': 'always',
-        'scss': 'always',
-        'json': 'always'
-      }],
-      'import/no-unresolved': ['error', {
-        ignore: [
-          '\\.css$',
-          '\\.scss$',
-          '\\.svg$',
-          '\\.png$',
-          '\\.jpg$',
-          '\\.jpeg$',
-          '\\.gif$',
-          '\\.ico$',
-          '\\.webp$',
-          '^@audiostore/.*',
-          '^@mf-types/.*',
-          'photoswipe/.*'
-        ]
-      }],
-      // Enforce using aliases
-      'no-restricted-imports': ['warn', {
-        patterns: [
-          {
-            group: ['./src/*', '../src/*', '../../src/*'],
-            message: 'Please use aliases (@) instead of relative paths from src'
-          },
-          {
-            group: ['src/*'],
-            message: 'Please use aliases (@) instead of absolute paths from src'
-          }
-        ]
-      }],
-      'import/order': ['warn', {
-        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-        pathGroups: ALIAS_PATHS.map((alias) => ({
-          pattern: `${alias}/**`,
-          group: 'internal',
-          position: 'before'
-        })),
-        'newlines-between': 'always',
-        alphabetize: {
-          order: 'asc',
-          caseInsensitive: true
+      'import/extensions': [
+        'error',
+        'never',
+        {
+          css: 'always',
+          scss: 'always',
+          json: 'always',
+          svg: 'always'
         }
-      }],
+      ],
+      'import/no-unresolved': [
+        'error',
+        {
+          ignore: [
+            '\\.css$',
+            '\\.scss$',
+            '\\.svg$',
+            '\\.png$',
+            '\\.jpg$',
+            '\\.jpeg$',
+            '\\.gif$',
+            '\\.ico$',
+            '\\.webp$',
+            '^@audiostore/.*',
+            '^@mf-types/.*',
+            'photoswipe/.*'
+          ]
+        }
+      ],
+      // Enforce using aliases
+      'no-restricted-imports': [
+        'warn',
+        {
+          patterns: [
+            {
+              group: ['./src/*', '../src/*', '../../src/*'],
+              message: 'Please use aliases (@) instead of relative paths from src'
+            },
+            {
+              group: ['src/*'],
+              message: 'Please use aliases (@) instead of absolute paths from src'
+            }
+          ]
+        }
+      ],
+      'import/order': [
+        'warn',
+        {
+          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+          pathGroups: ALIAS_PATHS.map((alias) => ({
+            pattern: `${alias}/**`,
+            group: 'internal',
+            position: 'before'
+          })),
+          'newlines-between': 'always',
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true
+          }
+        }
+      ],
 
       // General
-      'no-console': ['warn', { 
-        allow: ['warn', 'error'] 
-      }],
-      'max-len': ['error', { 
-        code: 150,
-        ignorePattern: 'd="([\\s\\S]*?)"',
-        ignoreUrls: true,
-        ignoreStrings: true,
-        ignoreTemplateLiterals: true,
-        ignoreRegExpLiterals: true
-      }],
-      'prettier/prettier': ['error', {
-        endOfLine: 'auto',
-        singleQuote: true,
-        trailingComma: 'none',
-        tabWidth: 2,
-        semi: true
-      }]
+      'no-console': [
+        'warn',
+        {
+          allow: ['warn', 'error']
+        }
+      ],
+      'max-len': [
+        'error',
+        {
+          code: 150,
+          ignorePattern: 'd="([\\s\\S]*?)"',
+          ignoreUrls: true,
+          ignoreStrings: true,
+          ignoreTemplateLiterals: true,
+          ignoreRegExpLiterals: true
+        }
+      ],
+      'prettier/prettier': [
+        'error',
+        {
+          endOfLine: 'auto',
+          singleQuote: true,
+          trailingComma: 'none',
+          tabWidth: 2,
+          semi: true
+        }
+      ]
     }
   },
 
