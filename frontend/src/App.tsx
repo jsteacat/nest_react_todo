@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react';
 
 import { useTasks } from '@/entities/task/model/hooks/useTasks';
 
-import TodoItem from '@components/TodoItem/TodoItem';
+import TaskCreate from '@components/TaskCreate/TaskCreate';
+import TaskInfo from '@components/TaskInfo/TaskInfo';
+import TaskItem from '@components/TaskItem/TaskItem';
+import TaskSearch from '@components/TaskSearch/TaskSearch';
 
-function App() {
+export default function App() {
   const [taskTitle, setTaskTitle] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [taskIdInput, setTaskIdInput] = useState('');
@@ -70,30 +73,20 @@ function App() {
         <div className="bg-white shadow-lg rounded-3xl p-8">
           <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">REACT TODO LIST</h1>
 
-          <div className="flex flex-col gap-2">
-            <input
-              value={taskTitle}
-              type="text"
-              placeholder="Введите название задачи"
-              className="flex-grow px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onChange={(e) => setTaskTitle(e.target.value)}
+          {
+            <TaskCreate
+              title={taskTitle}
+              description={taskDescription}
+              setTitle={setTaskTitle}
+              setDescription={setTaskDescription}
+              onCreate={handleCreateTask}
             />
-            <input
-              value={taskDescription}
-              type="text"
-              placeholder="Введите описание задачи"
-              className="flex-grow px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onChange={(e) => setTaskDescription(e.target.value)}
-            />
-            <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors" onClick={handleCreateTask}>
-              Добавить
-            </button>
-          </div>
+          }
 
           {tasks.length > 0 && (
             <ul className="mt-6 space-y-2">
-              {tasks.map((todo) => (
-                <TodoItem key={todo.id} todo={todo} onDelete={() => handleDelete(todo.id!.toString())} />
+              {tasks.map((task) => (
+                <TaskItem key={task.id} task={task} onDelete={() => handleDelete(task.id!.toString())} />
               ))}
             </ul>
           )}
@@ -102,30 +95,11 @@ function App() {
         <div className="bg-white shadow-lg rounded-3xl p-8 h-fit">
           <h2 className="text-2xl font-bold text-center text-gray-900 mb-6">Поиск задачи</h2>
 
-          <div className="flex">
-            <input
-              value={taskIdInput}
-              type="text"
-              placeholder="Введите ID задачи"
-              className="flex-grow px-4 py-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onChange={(e) => setTaskIdInput(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleGetTaskById()}
-            />
-            <button className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-r-lg transition-colors" onClick={handleGetTaskById}>
-              Найти
-            </button>
-          </div>
+          {<TaskSearch inputValue={taskIdInput} setInputValue={setTaskIdInput} onSearch={handleGetTaskById} />}
 
-          {currentTask && (
-            <div className="mt-6 p-4 border rounded-lg bg-gray-50">
-              <h3 className="font-bold text-lg mb-2">{currentTask.title}</h3>
-              <p className="text-gray-600 mb-2">{currentTask.description || 'Нет описания'}</p>
-            </div>
-          )}
+          {currentTask && <TaskInfo task={currentTask} />}
         </div>
       </div>
     </div>
   );
 }
-
-export default App;
