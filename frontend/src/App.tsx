@@ -17,7 +17,7 @@ export default function App() {
     fetchTasks();
   }, [fetchTasks]);
 
-  const handleCreateTask = async () => {
+  async function handleCreateTask() {
     if (!taskTitle.trim()) {
       alert('Пожалуйста, введите название задачи');
       return;
@@ -33,9 +33,9 @@ export default function App() {
     } catch (err) {
       console.error('Ошибка при создании задачи:', err);
     }
-  };
+  }
 
-  const handleGetTaskById = async () => {
+  async function handleGetTaskById() {
     if (!taskIdInput.trim()) {
       alert('Пожалуйста, введите ID задачи');
       return;
@@ -47,9 +47,9 @@ export default function App() {
     } catch (err) {
       console.error('Ошибка при поиске задачи:', err);
     }
-  };
+  }
 
-  const handleDelete = async (id: string) => {
+  async function handleDelete(id: string) {
     const confirmation = window.confirm('Вы уверены, что хотите удалить задачу?');
     if (confirmation) {
       try {
@@ -59,7 +59,7 @@ export default function App() {
         console.error('Ошибка при удалении задачи:', err);
       }
     }
-  };
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-600 to-emerald-400 py-10 px-4">
