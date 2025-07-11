@@ -1,4 +1,4 @@
-import type { ITask } from '@/entities/task/types/types';
+import type { ITask } from '@/entities/task/types';
 
 import { api } from './api';
 

@@ -1,4 +1,4 @@
-import type { TTaskAction, TTaskState } from '@/entities/task/types/types';
+import type { TTaskAction, TTaskState } from '@/entities/task/types';
 
 export function tasksReducer(state: TTaskState, action: TTaskAction): TTaskState {
   switch (action.type) {

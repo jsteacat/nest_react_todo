@@ -1,5 +1,5 @@
 import DeleteIcon from '@/assets/icons/delete.svg';
-import type { ITaskItemProps } from '@/entities/task/types/types';
+import type { ITaskItemProps } from '@/entities/task/types';
 
 export default function TaskItem({ task, onDelete }: ITaskItemProps) {
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { TaskSearchProps } from '@/entities/task/types/types';
+import type { TaskSearchProps } from '@/entities/task/types';
 
 export default function TaskSearch({ inputValue, setInputValue, onSearch }: TaskSearchProps) {
   const handleKeyDown = (e: React.KeyboardEvent) => {

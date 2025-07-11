@@ -3,7 +3,7 @@ import { useCallback, useReducer } from 'react';
 import { parseError } from '@/entities/shared/utils/parseError';
 import { createTask, deleteTaskById, getTaskById, getTasks } from '@/entities/task/api/taskApi';
 import { tasksReducer } from '@/entities/task/model/tasksReducer';
-import type { ITask, TTaskState } from '@/entities/task/types/types';
+import type { ITask, TTaskState } from '@/entities/task/types';
 
 const initialState: TTaskState = {
   tasks: [],
@@ -22,6 +22,7 @@ export function useTasks() {
     try {
       const data: ITask[] = await getTasks();
       dispatch({ type: 'FETCH_SUCCESS', payload: data });
+      return data;
     } catch (e) {
       const error = parseError(e);
       dispatch({ type: 'FETCH_ERROR', payload: error });
@@ -64,7 +65,7 @@ export function useTasks() {
       dispatch({ type: 'FETCH_START' });
       try {
         await createTask(body);
-        await fetchTasks();
+        return await fetchTasks();
       } catch (e) {
         const error = parseError(e);
         dispatch({ type: 'FETCH_ERROR', payload: error });

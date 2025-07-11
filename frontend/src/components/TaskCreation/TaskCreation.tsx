@@ -1,6 +1,6 @@
-import type { ITaskCreateProps } from '@/entities/task/types/types';
+import type { ITaskCreateProps } from '@/entities/task/types';
 
-export default function TaskCreate({ title, description, setTitle, setDescription, onCreate }: ITaskCreateProps) {
+export default function TaskCreation({ title, description, setTitle, setDescription, onCreate }: ITaskCreateProps) {
   return (
     <div className="flex flex-col gap-2">
       <input

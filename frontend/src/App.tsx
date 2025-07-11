@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
+import { TasksContext } from '@/context/tasks';
 import { useTasks } from '@/entities/task/model/hooks/useTasks';
 
-import TaskCreate from '@components/TaskCreate/TaskCreate';
+import TaskCreation from '@components/TaskCreation/TaskCreation';
 import TaskInfo from '@components/TaskInfo/TaskInfo';
 import TaskItem from '@components/TaskItem/TaskItem';
 import TaskSearch from '@components/TaskSearch/TaskSearch';
@@ -11,11 +12,21 @@ export default function App() {
   const [taskTitle, setTaskTitle] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [taskIdInput, setTaskIdInput] = useState('');
-  const { tasks, removeTaskById, currentTask, fetchTasks, loading, error, fetchTaskById, addTask } = useTasks();
+  const { removeTaskById, fetchTasks, loading, error, addTask, fetchTaskById, currentTask } = useTasks();
+  const { tasks, setTasks } = useContext(TasksContext);
 
   useEffect(() => {
-    fetchTasks();
-  }, [fetchTasks]);
+    const loadInitialTasks = async () => {
+      try {
+        const fetchedTasks = await fetchTasks();
+        setTasks(fetchedTasks);
+      } catch (err) {
+        console.error('Ошибка загрузки:', err);
+      }
+    };
+
+    loadInitialTasks();
+  }, []);
 
   async function handleCreateTask() {
     if (!taskTitle.trim()) {
@@ -24,10 +35,8 @@ export default function App() {
     }
 
     try {
-      await addTask({
-        title: taskTitle,
-        description: taskDescription
-      });
+      const updatedTasks = await addTask({ title: taskTitle, description: taskDescription });
+      setTasks(updatedTasks);
       setTaskTitle('');
       setTaskDescription('');
     } catch (err) {
@@ -54,7 +63,8 @@ export default function App() {
     if (confirmation) {
       try {
         await removeTaskById(id);
-        await fetchTasks();
+        const data = await fetchTasks();
+        setTasks(data);
       } catch (err) {
         console.error('Ошибка при удалении задачи:', err);
       }
@@ -74,7 +84,7 @@ export default function App() {
           <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">REACT TODO LIST</h1>
 
           {
-            <TaskCreate
+            <TaskCreation
               title={taskTitle}
               description={taskDescription}
               setTitle={setTaskTitle}
